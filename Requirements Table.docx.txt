@@ -1,0 +1,72 @@
+﻿PES1UG24CS205
+JULIA MARIAM JIKKU
+CSE D SECTION
+SCENARIO NO. 18 (SUBJECT RECRUITMENT ENGINE FOR CLINICAL TRIALS)
+
+
+
+
+ID
+	Type
+	Description
+	Priority
+	Acceptance Criteria
+	Rationale
+	FR-001
+	Functional
+	The system shall evaluate candidate pre-screening responses against defined trial protocol inclusion/exclusion criteria.
+	High
+	Pass: Candidate failing >=1 exclusion criteria is marked "Ineligible" with reasons logged.
+Fail: Ineligible candidates marked "Eligible" or failed criteria are omitted.
+	Prevents unqualified subjects from enrolling, protecting trial validity and patient safety.
+	FR-002
+	Functional
+	The system shall provide an electronic Informed Consent Form (eICF) workflow with digital signature capture and version tracking.
+	High
+	Pass: Timestamped signature captured; candidate status updates to "Consented"; PDF copy sent.
+Fail: Unsigned forms allow progression or consent version is untracked.
+	Compliance with GCP (Good Clinical Practice) and legal mandates for human subject trials.
+	FR-003
+	Functional
+	The system shall enable Clinical Researchers to configure trial protocol criteria (demographics, biomarkers, medical history).
+	Medium
+	Pass: Researcher creates/updates criteria; updates reflect immediately in the evaluation engine.
+Fail: Criteria changes fail to persist or do not update real-time screening rules.
+	Protocols evolve across phases; researchers need dynamic rule configuration without code redeployment.
+	FR-004
+	Functional
+	The system shall log and track subject clinical trial visit compliance milestones (scheduled, completed, missed, rescheduled).
+	Medium
+	Pass: Researcher logs visit outcome; missed visit triggers an alert and compliance rate recalculation.
+Fail: Visit status updates fail to save or do not update overall subject compliance score.
+	Ensures protocol adherence and identifies non-compliant subjects risking study attrition.
+	FR-005
+	Functional
+	The system shall notify eligible candidates and assignees via automated SMS/email upon status change or upcoming visit.
+	Low
+	Pass: Notification dispatched within 60 seconds of eligibility classification or milestone trigger.
+Fail: Failed delivery without retry mechanism or incorrect subject notified.
+	Minimizes subject drop-off and maintains recruitment velocity.
+	NFR-001 
+	Non-Functional
+	The system must comply with FDA 21 CFR Part 11 and HIPAA standards via immutable cryptographic audit trails and AES-256 encryption at rest. 
+	High
+	Pass: All CRUD actions on subject data log an immutable entry (User ID, timestamp, prior/new value); zero plaintext PII.
+Fail: Missing audit entries for data modifications or plaintext storage of PHI.
+
+
+	Regulatory rejection and massive penalties occur if trial data integrity or patient privacy is breached. 
+	NFR-002 
+	Non-Functional
+	The eligibility screening engine must process and classify candidate surveys under peak load within sub-second latency, maintaining 99.9% uptime. 
+	Medium 
+	Pass: 95th percentile response time <800 ms under 500 concurrent survey submissions.
+Fail: p95>=800 ms or error rate >0.1% during load testing
+
+
+	Prevents candidate drop-off during high-traffic campaign recruitments and ensures trial continuity.
+	
+
+
+
+Actors: Trial Candidate, Clinic Researcher, SMS notification, recieptionist
